@@ -9,7 +9,7 @@ const express = require("express");
 const log = require("./functions/logger");
 const db = require("./functions/database");
 const bot = new Bot(process.env.BOT_TOKEN);
-const app = new express();
+const app = express();
 app.use(express.json());
 
 app.post("/webhook", (req, res) => {
@@ -109,3 +109,5 @@ bot.catch((err) => {
 // bot.command("start", startBot);
 
 bot.start();
+
+app.listen(80, () => console.log("Server started"));
