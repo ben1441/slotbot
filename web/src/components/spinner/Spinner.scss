@@ -1,0 +1,156 @@
+@import '../../App.scss';
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,600;0,700;1,600&family=Inter:wght@500;600;700;900&family=Joti+One&family=Lato:wght@400;900&family=Montserrat:ital,wght@0,500;1,500&family=Outfit:wght@500;600;900&family=Playfair+Display&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;1,400&family=Protest+Guerrilla&family=Righteous&family=Roboto:wght@300;400;500&family=Rubik&family=Rubik+Burned&family=Rubik+Glitch&family=Rubik+Maps&family=Rubik+Scribble&family=Ubuntu&display=swap');
+
+
+$icon_width: 79px;
+$icon_height: 79px;
+$num_icons: 4;
+
+.slots-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img{
+    width: 40vh;
+
+    @include mobile{
+      width: 30vh;
+    }
+  }
+
+  .slots {
+    width: 3.3 * $icon_width;
+    height: 3.1 * $icon_height;
+    display: flex;
+    justify-content: space-between;
+
+    .reel {
+      width: $icon_width;
+      height: 3.1 * $icon_height;
+      border: 2px solid white;
+      background-image: url('../../../public/images//reel.png');
+      background-size: cover;
+      border-radius: 10px;
+      background-position: 0 0;
+
+      &.blink {
+          border: 2px solid yellow;
+          animation: blinkBorder 1s infinite;
+        }
+    }
+  }
+  .spinBtn{
+    border: none;
+    padding:.6rem 1rem .6rem 1rem;
+    border-radius: 2px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Protest Guerrilla', sans-serif;
+    background-color: rgb(79,24,169);
+    // clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+    font-weight: 900;
+    margin-top: 1rem;
+    border-radius: 5px;
+    letter-spacing: 2px;
+
+    .spinning{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border-top: 2px solid white;
+      animation: rotateAnimation 1s infinite;
+    }
+
+  }
+  .spinBtn:hover{
+    cursor: pointer;
+  }
+  .amount-container{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    color: white;
+  
+    button{
+      border: none;
+      padding:.6rem 1rem .6rem 1rem;
+      border-radius: 2px;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: rgb(79,24,169);
+      clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+      font-weight: 900;
+      border-radius: 5px;
+    }
+  
+    h4{
+      margin: 8px;
+    }
+  }
+
+  .winner{
+    position: absolute;
+    width: 500px;
+
+    @include mobile{
+      width: 100%;
+    }
+  }
+}
+
+@keyframes blinkBorder {
+    0% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: yellow;
+      scale: 1.02;
+    }
+    100% {
+      border-color: transparent;
+    }
+  }
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg); 
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .balance{
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile{
+        right: 20px;
+        top: 20px;
+    }
+
+    h4{
+        color: white;
+        font-size: 5vh;
+
+        @include mobile{
+            font-size: 4vh;
+            margin-right: 7px;
+        }
+    }
+    h2{
+        height: 13vh;
+
+        @include mobile{
+            height: 8vh;
+        }
+    }
+}
+
+

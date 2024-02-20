@@ -1,0 +1,35 @@
+
+
+
+
+.error-container { 
+	text-align: center; 
+	background-color: #000000; 
+	padding: 20px; 
+	border-radius: 5px; 
+} 
+
+h1 { 
+	font-size: 5rem; 
+	color: #0a53e6; 
+} 
+
+p { 
+	font-size: 1.5rem; 
+	color: #ffffff; 
+	margin-bottom: 20px; 
+} 
+
+a { 
+	text-decoration: none; 
+	background-color: #ff5733; 
+	color: #fff; 
+	padding: 10px 20px; 
+	border-radius: 3px; 
+	font-weight: bold; 
+	transition: background-color 0.3s ease; 
+} 
+
+a:hover { 
+	background-color: #e6482e; 
+}
