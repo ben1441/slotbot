@@ -107,6 +107,4 @@ mongoose
     console.error("Error connecting to the database:", error);
   });
 
-bot.start();
-
 app.listen(80, () => console.log("Server started"));
