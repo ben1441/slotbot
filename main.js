@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Bot, session, InputFile, Keyboard, InlineKeyboard } = require("grammy");
-const { connect } = require("mongoose");
+const mongoose = require("mongoose");
 const { conversations } = require("@grammyjs/conversations");
 const { hydrateReply } = require("@grammyjs/parse-mode");
 const { hydrateFiles } = require("@grammyjs/files");
@@ -13,8 +13,8 @@ const app = express();
 app.use(express.json());
 
 app.post("/webhook", (req, res) => {
-  console.log(`[+] New webhook request\n\n${req.body}\n\n`);
-  res.status.send("OK");
+  console.log(`[+] New webhook request\n\n${JSON.parse(req.body)}\n\n`);
+  res.send("OK");
 });
 
 bot.api.config.use(hydrateFiles(bot.token));
@@ -26,25 +26,25 @@ bot.use(
 );
 bot.use(conversations());
 
-// bot.use(async (ctx, next) => {
-//   var user = await db.userExists(ctx.from.id);
-//   if (!user) await db.createUser(ctx.from.id);
+bot.use(async (ctx, next) => {
+  var user = await db.userExists(ctx.from.id);
+  if (!user) await db.createUser(ctx.from.id);
 
-//   const subadmins = await db.getAdmins();
-//   const adminList = [
-//     parseInt(process.env.OWNER_ID),
-//     ...(subadmins ? subadmins.map((x) => x.telegramId) : []),
-//   ];
-//   ctx.config = ctx.config || {};
-//   ctx.config.adminList = adminList;
-//   await next();
-// });
+  const subadmins = await db.getAdmins();
+  const adminList = [
+    parseInt(process.env.OWNER_ID),
+    ...(subadmins ? subadmins.map((x) => x.telegramId) : []),
+  ];
+  ctx.config = ctx.config || {};
+  ctx.config.adminList = adminList;
+  await next();
+});
 
-// bot.use(require("./commands/admin/admin"));
-// bot.use(require("./commands/admin/item"));
-// bot.use(require("./commands/admin/user"));
-// bot.use(require("./commands/admin/admins"));
-// bot.use(require("./commands/user/profile"));
+bot.use(require("./commands/admin/admin"));
+bot.use(require("./commands/admin/item"));
+bot.use(require("./commands/admin/user"));
+bot.use(require("./commands/admin/admins"));
+bot.use(require("./commands/user/profile"));
 bot.use(require("./commands/user/jackpot"));
 bot.use(require("./commands/user/about"));
 
@@ -92,21 +92,20 @@ bot.catch((err) => {
   log.error(err);
 });
 
-// connect(process.env.MONGO_URI)
-//   .then(() => {
-//     console.log("Connected to the database");
-//     bot.start({
-//       drop_pending_updates: true,
-//       onStart: (me) => {
-//         console.log("Bot started", me.username);
-//       },
-//     });
-//   })
-//   .catch((error) => {
-//     console.error("Error connecting to the database:", error);
-//   });
-
-// bot.command("start", startBot);
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("Connected to the database");
+    bot.start({
+      drop_pending_updates: true,
+      onStart: (me) => {
+        console.log("Bot started", me.username);
+      },
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to the database:", error);
+  });
 
 bot.start();
 
